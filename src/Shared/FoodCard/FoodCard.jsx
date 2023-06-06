@@ -1,54 +1,59 @@
+import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
+import useAuth from '../../hooks/useAuth';
+
 const FoodCard = ({ item }) => {
-	const { name, image, price, recipe } = item;
+	const { user } = useAuth();
+	const navigate = useNavigate();
+	const { name, image, price, recipe, _id } = item;
 
-	// const handleAddToCart = (item) => {
-	// 	console.log(item);
+	const handleAddToCart = (item) => {
+		console.log(item);
 
-	// 	if (user && user.email) {
-	// 		const orderItem = {
-	// 			menuItemId: _id,
-	// 			name,
-	// 			image,
-	// 			price,
-	// 			email: user.email,
-	// 		};
-	// 		fetch('http://localhost:5000/carts', {
-	// 			method: 'POST',
-	// 			headers: {
-	// 				'content-type': 'application/json',
-	// 			},
-	// 			body: JSON.stringify(orderItem),
-	// 		})
-	// 			.then((res) => res.json())
-	// 			.then((data) => {
-	// 				console.log(data);
-	// 				if (data.insertedId) {
-	// 					refetch();
-	// 					Swal.fire({
-	// 						position: 'top-end',
-	// 						icon: 'success',
-	// 						title: 'Food added cart',
-	// 						showConfirmButton: false,
-	// 						timer: 1500,
-	// 					});
-	// 				}
-	// 			});
-	// 	} else {
-	// 		Swal.fire({
-	// 			title: 'please add to order the food',
-	// 			text: "You won't be able to revert this!",
-	// 			icon: 'warning',
-	// 			showCancelButton: true,
-	// 			confirmButtonColor: '#3085d6',
-	// 			cancelButtonColor: '#d33',
-	// 			confirmButtonText: 'Login now!',
-	// 		}).then((result) => {
-	// 			if (result.isConfirmed) {
-	// 				navigate('/login', { state: { from: location } });
-	// 			}
-	// 		});
-	// 	}
-	// };
+		if (user && user.email) {
+			const orderItem = {
+				menuItemId: _id,
+				name,
+				image,
+				price,
+				email: user.email,
+			};
+			fetch('http://localhost:5000/carts', {
+				method: 'POST',
+				headers: {
+					'content-type': 'application/json',
+				},
+				body: JSON.stringify(orderItem),
+			})
+				.then((res) => res.json())
+				.then((data) => {
+					console.log(data);
+					if (data.insertedId) {
+						// refetch();
+						Swal.fire({
+							position: 'top-end',
+							icon: 'success',
+							title: 'Food added cart',
+							showConfirmButton: false,
+							timer: 1500,
+						});
+					}
+				});
+		} else {
+			Swal.fire({
+				title: 'please add to order the food',
+				icon: 'warning',
+				showCancelButton: true,
+				confirmButtonColor: '#3085d6',
+				cancelButtonColor: '#d33',
+				confirmButtonText: 'Login now!',
+			}).then((result) => {
+				if (result.isConfirmed) {
+					navigate('/login', { state: { from: location } });
+				}
+			});
+		}
+	};
 
 	return (
 		<div className="card w-96 bg-base-100 shadow-xl">
@@ -63,7 +68,7 @@ const FoodCard = ({ item }) => {
 				<p>{recipe}</p>
 				<div className="card-actions">
 					<button
-						onClick={() => 'handleAddToCart(item)'}
+						onClick={() => handleAddToCart(item)}
 						className="btn btn-outline bg-slate-100 border-0 border-orange-400 border-b-4 mt-4"
 					>
 						Add To Cart

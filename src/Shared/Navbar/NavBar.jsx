@@ -1,15 +1,16 @@
 import { Link } from 'react-router-dom';
+import useAuth from '../../hooks/useAuth';
 const NavBar = () => {
-	// const { user, logOut } = useContext(AuthContext);
+	const { user, logOut } = useAuth();
 	// const [cart] = useCart();
 
-	// const handleLogOut = () => {
-	// 	logOut()
-	// 		.then(() => {})
-	// 		.catch((error) => {
-	// 			console.log(error);
-	// 		});
-	// };
+	const handleLogOut = () => {
+		logOut()
+			.then(() => {})
+			.catch((error) => {
+				console.log(error);
+			});
+	};
 	const navItem = (
 		<>
 			<li>
@@ -22,8 +23,21 @@ const NavBar = () => {
 				<Link to="/order/salad">Order Food</Link>
 			</li>
 			<li>
-				<Link to="/login">Login</Link>
+				<Link to="secret">Secret</Link>
 			</li>
+			{user ? (
+				<>
+					<button onClick={handleLogOut} className="btn btn-ghost">
+						LogOut
+					</button>
+				</>
+			) : (
+				<>
+					<li>
+						<Link to="/login">Login</Link>
+					</li>
+				</>
+			)}
 
 			{/* <li>
 				<Link to="/dashboard/mycart">
