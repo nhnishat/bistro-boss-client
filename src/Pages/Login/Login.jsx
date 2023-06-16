@@ -32,13 +32,11 @@ const Login = () => {
 			const user = result.user;
 			console.log(user);
 			Swal.fire({
-				title: 'User Login Successful.',
-				showClass: {
-					popup: 'animate__animated animate__fadeInDown',
-				},
-				hideClass: {
-					popup: 'animate__animated animate__fadeOutUp',
-				},
+				position: 'top-end',
+				icon: 'success',
+				title: 'Your work has been saved',
+				showConfirmButton: false,
+				timer: 1500,
 			});
 			navigate(from, { replace: true });
 		});
@@ -112,7 +110,7 @@ const Login = () => {
 							{/* TODO: make button disabled for captcha */}
 							<div className="form-control mt-6">
 								<input
-									disabled={disabled}
+									disabled={false}
 									className="btn btn-primary"
 									type="submit"
 									value="Login"
@@ -124,7 +122,7 @@ const Login = () => {
 								New Here? <Link to="/signup">Create an account</Link>{' '}
 							</small>
 						</p>
-						<SocialLogin />
+						<SocialLogin></SocialLogin>
 					</div>
 				</div>
 			</div>

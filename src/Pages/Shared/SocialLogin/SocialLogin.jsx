@@ -18,7 +18,7 @@ const SocialLogin = () => {
 				name: loggedInUser.displayName,
 				email: loggedInUser.email,
 			};
-			fetch('http://localhost:5000/users', {
+			fetch('https://bistro-boss-sever-flax.vercel.app/users', {
 				method: 'POST',
 				headers: {
 					'content-type': 'application/json',
@@ -28,9 +28,6 @@ const SocialLogin = () => {
 				.then((res) => res.json())
 				.then(() => {
 					navigate(from, { replace: true });
-				})
-				.catch((error) => {
-					console.log(error);
 				});
 		});
 	};

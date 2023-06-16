@@ -8,19 +8,18 @@ import {
 	FaWallet,
 } from 'react-icons/fa';
 import { NavLink, Outlet } from 'react-router-dom';
+import useAdmin from '../hooks/useAdmin';
 import useCart from '../hooks/useCart';
 
 const Dashboard = () => {
 	const [cart] = useCart();
 
-	// TODO: load data from the server to have dynamic isAdmin based on Data
-	const isAdmin = true;
-	// const [isAdmin] = useAdmin();
+	const [isAdmin] = useAdmin();
 
 	return (
 		<div className="drawer drawer-mobile ">
 			<input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
-			<div className="drawer-content flex flex-col items-center justify-center">
+			<div className="drawer-content ">
 				<Outlet></Outlet>
 				<label
 					htmlFor="my-drawer-2"
@@ -35,17 +34,18 @@ const Dashboard = () => {
 					{isAdmin ? (
 						<>
 							<li>
-								<NavLink to="/dashboard/home">
+								<NavLink to="/dashboard/adminHome">
 									<FaHome></FaHome> Admin Home
 								</NavLink>
 							</li>
 							<li>
-								<NavLink to="/dashboard/reservations">
-									<FaUtensils></FaUtensils> Add Items
+								<NavLink to="/dashboard/addItem">
+									{' '}
+									<FaUtensils></FaUtensils> Add an Items
 								</NavLink>
 							</li>
 							<li>
-								<NavLink to="/dashboard/history">
+								<NavLink to="/dashboard/manageItem">
 									<FaWallet></FaWallet> Manage Items
 								</NavLink>
 							</li>
@@ -63,7 +63,7 @@ const Dashboard = () => {
 					) : (
 						<>
 							<li>
-								<NavLink to="/dashboard/home">
+								<NavLink to="/dashboard/userHome">
 									<FaHome></FaHome> User Home
 								</NavLink>
 							</li>
@@ -92,7 +92,7 @@ const Dashboard = () => {
 					<li>
 						<NavLink to="/">
 							<FaHome></FaHome> Home
-						</NavLink>
+						</NavLink>{' '}
 					</li>
 					<li>
 						<NavLink to="/menu"> Our Menu</NavLink>

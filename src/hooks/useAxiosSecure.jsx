@@ -1,15 +1,14 @@
 import axios from 'axios';
-import { useContext, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { AuthContext } from '../providers/AuthProvider';
+import useAuth from './useAuth';
 
+const axiosSecure = axios.create({
+	baseURL: 'https://bistro-boss-sever-flax.vercel.app',
+});
 const useAxiosSecure = () => {
-	const { logOut } = useContext(AuthContext);
+	const { logOut } = useAuth();
 	const navigate = useNavigate();
-
-	const axiosSecure = axios.create({
-		baseURL: 'http://localhost:5000',
-	});
 
 	useEffect(() => {
 		axiosSecure.interceptors.request.use((config) => {
@@ -33,7 +32,7 @@ const useAxiosSecure = () => {
 				return Promise.reject(error);
 			}
 		);
-	}, [logOut, navigate, axiosSecure]);
+	}, [logOut, navigate]);
 
 	return [axiosSecure];
 };

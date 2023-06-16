@@ -17,9 +17,10 @@ export const AuthContext = createContext(null);
 const auth = getAuth(app);
 
 const AuthProvider = ({ children }) => {
-	const googleProvider = new GoogleAuthProvider();
 	const [user, setUser] = useState(null);
 	const [loading, setLoading] = useState(true);
+
+	const googleProvider = new GoogleAuthProvider();
 
 	const createUser = (email, password) => {
 		setLoading(true);
@@ -31,13 +32,14 @@ const AuthProvider = ({ children }) => {
 		return signInWithEmailAndPassword(auth, email, password);
 	};
 
-	const logOut = () => {
-		setLoading(true);
-		return signOut(auth);
-	};
 	const googleSignIn = () => {
 		setLoading(true);
 		return signInWithPopup(auth, googleProvider);
+	};
+
+	const logOut = () => {
+		setLoading(true);
+		return signOut(auth);
 	};
 
 	const updateUserProfile = (name, photo) => {
@@ -51,19 +53,21 @@ const AuthProvider = ({ children }) => {
 		const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
 			setUser(currentUser);
 			console.log('current user', currentUser);
+
 			// get and set token
 			if (currentUser) {
 				axios
-					.post('http://localhost:5000/jwt', { email: currentUser.email })
+					.post('https://bistro-boss-sever-flax.vercel.app/jwt', {
+						email: currentUser.email,
+					})
 					.then((data) => {
-						console.log(data.data.token);
+						// console.log(data.data.token)
 						localStorage.setItem('access-token', data.data.token);
+						setLoading(false);
 					});
 			} else {
 				localStorage.removeItem('access-token');
 			}
-
-			setLoading(false);
 		});
 		return () => {
 			return unsubscribe();
@@ -75,9 +79,9 @@ const AuthProvider = ({ children }) => {
 		loading,
 		createUser,
 		signIn,
+		googleSignIn,
 		logOut,
 		updateUserProfile,
-		googleSignIn,
 	};
 
 	return (
