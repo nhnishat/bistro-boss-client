@@ -1,6 +1,6 @@
-### FrontEnd
+# FrontEnd
 
-# firebase
+### firebase
 
 VITE_APIKEY=
 VITE_AUTHDOMAIN=
@@ -9,17 +9,17 @@ VITE_STORAGEBUCKET=
 VITE_MESSAGINGSENDERID=
 VITE_APPID=
 
-# imgbb img token
+### imgbb img token
 
 VITE_image_Upload_token=
 
-# stripe pk
+### stripe pk
 
 VITE_Payment_Gatway_pk=
 
-### BackEnd
+# BackEnd
 
-# Mongodb
+### Mongodb
 
 USER_NAME=
 USER_PASS=
@@ -27,6 +27,6 @@ ACCESS_TOKEN_SECRET=n491cc09fb7ca269e2ca23043e8ed2259112d7878419b24f779d4ca36785
 2335fbd4c6c32e5d8a3b1442ddf0c754d946b765d64656c700498c47e17732
 5521fi
 
-# stripe
+### stripe
 
 PAYMENT_SECRET_KEY=
